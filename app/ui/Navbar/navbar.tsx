@@ -23,9 +23,9 @@ const Navbar = () => {
 
   return (
     <nav className={styles.navbar}>
-      <a href="/" className={styles.brand_button}>
+      <Link href="/" className={styles.brand_button}>
         {APP_NAME}
-      </a>
+      </Link>
       <button className={clsx(styles.hamburger_menu)} onClick={toggleMenu}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
