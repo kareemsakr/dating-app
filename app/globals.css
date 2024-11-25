@@ -5,6 +5,37 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* Primary Colors */
+  /* --red: hsl(0, 78%, 62%);
+    --cyan: hsl(180, 62%, 55%);
+    --orange: hsl(34, 97%, 64%);
+    --blue: hsl(212, 86%, 64%); */
+
+  /* Neutral Colors */
+  /* --very-dark-blue: hsl(234, 12%, 34%);
+    --grayish-blue: hsl(229, 6%, 66%);
+    --very-light-gray: hsl(0, 0%, 98%); */
+  --orange-peel: #ffa83d;
+  --white: hsl(0, 0%, 100%);
+
+  --xxs: 0.25rem;
+  --xs: 0.5rem;
+  --s: 0.75rem;
+  --m: 1rem;
+  --l: 1.25rem;
+  --xl: 1.5rem;
+  --2xl: 1.75rem;
+  --3xl: 2rem;
+  --4xl: 2.5rem;
+  --5xl: 3rem;
+  --6xl: 3.5rem;
+  --7xl: 4rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 @media (prefers-color-scheme: dark) {

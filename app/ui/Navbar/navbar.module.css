@@ -1,0 +1,79 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--m);
+}
+
+.menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  padding: var(--m);
+  z-index: 100;
+  background-color: var(--background);
+  animation: slide-in 0.5s forwards;
+}
+
+.menu button.closeButton {
+  align-self: flex-end;
+  font-size: var(--xl);
+  font-size: 1.5rem;
+}
+
+.menu.slide_out {
+  animation: slide-out 0.5s forwards;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.desktop_menu {
+  display: none;
+}
+
+.brand_button {
+  font-size: var(--l);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.menu_navigation {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu_button_list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+@media screen and (min-width: 768px) {
+  .desktop_menu {
+    display: none;
+  }
+}

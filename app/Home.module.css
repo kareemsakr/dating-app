@@ -1,0 +1,41 @@
+.hero {
+  background-color: rgba(0, 0, 0, 0);
+  position: relative;
+  height: calc(100vh - 68px);
+  z-index: 1;
+  display: flex;
+  gap: var(--s);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero::before {
+  content: "";
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.9)),
+    url("../public/hero.jpg");
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+.hero h1 {
+  font-size: 2rem;
+  color: var(--orange-peel);
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 1.2em;
+}
+
+.hero h3 {
+  font-size: 1.3rem;
+  color: var(--orange-peel);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1.2em;
+}
