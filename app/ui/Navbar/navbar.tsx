@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styles from "./navbar.module.css";
 import { APP_NAME } from "@/app/lib/constants";
 import clsx from "clsx";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,9 +44,9 @@ const Navbar = () => {
       {(isOpen || isClosing) && (
         <div className={clsx(styles.menu, { [styles.slide_out]: isClosing })}>
           <section className={styles.menu_navigation}>
-            <a href="/" className={styles.brand_button}>
+            <Link href="/" className={styles.brand_button}>
               {APP_NAME}
-            </a>
+            </Link>
             <button
               className={styles.closeButton}
               onClick={toggleMenu}
