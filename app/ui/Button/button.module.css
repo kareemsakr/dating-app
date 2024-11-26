@@ -17,6 +17,11 @@
     color: var(--orange-peel);
   }
 
+  &.black {
+    background-color: var(--my-black);
+    color: var(--white);
+  }
+
   &.hollow {
     background-color: transparent;
     border: 2px solid var(--orange-peel);

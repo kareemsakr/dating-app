@@ -16,6 +16,7 @@ export default function Button({
         [styles.white]: variant == "white",
         [styles.primary]: variant == "primary",
         [styles.hollow]: variant == "hollow",
+        [styles.black]: variant == "black",
       })}
       {...props}
     >
