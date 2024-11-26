@@ -2,25 +2,25 @@
   padding: 1em 2em;
   border-radius: var(--6xl);
   transition: all 0.3s;
-}
 
-.button:hover {
-  transform: scale(1.05);
-}
+  &:hover {
+    transform: scale(1.05);
+  }
 
-.button.white {
-  background-color: var(--white);
-  color: var(--orange-peel);
-}
+  &.primary {
+    background-color: var(--orange-peel);
+    color: var(--white);
+  }
 
-.button.primary {
-  background-color: var(--orange-peel);
-  color: var(--white);
-}
+  &.white {
+    background-color: var(--white);
+    color: var(--orange-peel);
+  }
 
-.button.hollow {
-  background-color: transparent;
-  border: 2px solid var(--orange-peel);
-  color: var(--orange-peel);
-  padding: calc(1em - 2px) calc(2em - 2px);
+  &.hollow {
+    background-color: transparent;
+    border: 2px solid var(--orange-peel);
+    color: var(--orange-peel);
+    padding: calc(1em - 2px) calc(2em - 2px);
+  }
 }

@@ -4,6 +4,7 @@ import styles from "./navbar.module.css";
 import { APP_NAME } from "@/app/lib/constants";
 import clsx from "clsx";
 import Link from "next/link";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +25,7 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <Link href="/" className={styles.brand_button}>
+        <Image src="/logo_hollow_nobg.svg" alt="logo" width={20} height={20} />
         {APP_NAME}
       </Link>
       <button className={clsx(styles.hamburger_menu)} onClick={toggleMenu}>

@@ -52,12 +52,30 @@
 
 .desktop_menu {
   display: none;
+
+  @media screen {
+    @media (min-width: 768px) {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
 }
 
 .brand_button {
   font-size: var(--l);
   font-size: 1.5rem;
   font-weight: 600;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > img {
+    margin-right: -2px;
+    margin-top: -2px;
+    color: var(--orange-peel);
+  }
 }
 
 .menu_navigation {
@@ -70,10 +88,4 @@
   flex-direction: column;
   height: 100%;
   justify-content: flex-end;
-}
-
-@media screen and (min-width: 768px) {
-  .desktop_menu {
-    display: none;
-  }
 }
