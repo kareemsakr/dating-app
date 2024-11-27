@@ -1,10 +1,27 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  padding: var(--m);
+  align-items: center;
+  padding-inline: var(--m);
+  height: var(--navbar-height);
+
+  @media screen {
+    @media (min-width: 768px) {
+      padding-inline: var(--xl);
+    }
+  }
+}
+
+.hamburger_menu {
+  @media screen {
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
 }
 
 .menu {
+  font-size: var(--3xl);
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -16,6 +33,16 @@
   z-index: 100;
   background-color: var(--background);
   animation: slide-in 0.5s forwards;
+
+  & button {
+    font-size: var(--m);
+  }
+
+  @media screen {
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
 }
 
 .menu button.closeButton {
@@ -56,8 +83,10 @@
   @media screen {
     @media (min-width: 768px) {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
+      align-items: center;
       width: 100%;
+      gap: var(--m);
     }
   }
 }
@@ -75,6 +104,21 @@
     margin-right: -2px;
     margin-top: -2px;
     color: var(--orange-peel);
+    width: 1.5rem;
+    height: 1.5rem;
+
+    @media screen {
+      @media (min-width: 768px) {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
+
+  @media screen {
+    @media (min-width: 768px) {
+      font-size: var(--3xl);
+    }
   }
 }
 
@@ -84,8 +128,13 @@
 }
 
 .menu_button_list {
+  padding-block: var(--xl);
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: flex-end;
+  gap: var(--m);
+
+  & .spacer {
+    flex-grow: 1;
+  }
 }

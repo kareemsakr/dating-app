@@ -5,6 +5,7 @@ import { APP_NAME } from "@/app/lib/constants";
 import clsx from "clsx";
 import Link from "next/link";
 import Image from "next/image";
+import Button from "../Button";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,10 +25,7 @@ const Navbar = () => {
 
   return (
     <nav className={styles.navbar}>
-      <Link href="/" className={styles.brand_button}>
-        <Image src="/logo_hollow_nobg.svg" alt="logo" width={20} height={20} />
-        {APP_NAME}
-      </Link>
+      <BrandButton />
       <button className={clsx(styles.hamburger_menu)} onClick={toggleMenu}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -46,9 +44,7 @@ const Navbar = () => {
       {(isOpen || isClosing) && (
         <div className={clsx(styles.menu, { [styles.slide_out]: isClosing })}>
           <section className={styles.menu_navigation}>
-            <Link href="/" className={styles.brand_button}>
-              {APP_NAME}
-            </Link>
+            <BrandButton />
             <button
               className={styles.closeButton}
               onClick={toggleMenu}
@@ -57,22 +53,44 @@ const Navbar = () => {
               &times;
             </button>
           </section>
-          <ul className={styles.menu_button_list}>
-            <li></li>
-            <li></li>
-          </ul>
+          <MenuItems className={styles.menu_button_list} />
         </div>
       )}
-
-      <ul className={clsx(styles.desktop_menu)}>
-        <li>
-          <a href="/register">Create Account</a>
-        </li>
-        <li>
-          <a href="/login">Login</a>
-        </li>
-      </ul>
+      <MenuItems className={styles.desktop_menu} />
     </nav>
+  );
+};
+
+const MenuItems = function ({ className }: { className: string }) {
+  return (
+    <ul className={className}>
+      <li>
+        <Link href="/about">Events</Link>
+      </li>
+      <li>
+        <Link href="/about">About</Link>
+      </li>
+      <li className={styles.spacer}></li>
+      <li>
+        <Button variant="primary" full>
+          <Link href="/sign_up">Sign Up</Link>
+        </Button>
+      </li>
+      <li>
+        <Button variant="hollow" full>
+          <Link href="/login">Login</Link>
+        </Button>
+      </li>
+    </ul>
+  );
+};
+
+const BrandButton = function () {
+  return (
+    <Link href="/" className={styles.brand_button}>
+      <Image src="/logo_hollow_nobg.svg" alt="logo" width={20} height={20} />
+      {APP_NAME}
+    </Link>
   );
 };
 

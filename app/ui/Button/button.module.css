@@ -1,4 +1,5 @@
 .button {
+  font-size: var(--s);
   padding: 1em 2em;
   border-radius: var(--6xl);
   transition: all 0.3s;
@@ -18,7 +19,7 @@
   }
 
   &.black {
-    background-color: var(--my-black);
+    background-color: var(--black);
     color: var(--white);
   }
 
@@ -27,5 +28,31 @@
     border: 2px solid var(--orange-peel);
     color: var(--orange-peel);
     padding: calc(1em - 2px) calc(2em - 2px);
+  }
+
+  &.hollow:hover {
+    background-color: var(--orange-peel);
+    color: var(--white);
+  }
+
+  &.medium {
+    font-size: var(--m);
+  }
+
+  &.large {
+    font-size: var(--l);
+  }
+
+  &.full {
+    width: 100%;
+  }
+
+  &.rounded {
+    border-radius: 100px;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
   }
 }
