@@ -43,7 +43,7 @@ const Navbar = () => {
       </button>
       {(isOpen || isClosing) && (
         <div className={clsx(styles.menu, { [styles.slide_out]: isClosing })}>
-          <section className={styles.menu_navigation}>
+          <header className={styles.menu_navigation}>
             <BrandButton />
             <button
               className={styles.closeButton}
@@ -52,7 +52,7 @@ const Navbar = () => {
             >
               &times;
             </button>
-          </section>
+          </header>
           <MenuItems className={styles.menu_button_list} />
         </div>
       )}

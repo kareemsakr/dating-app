@@ -14,13 +14,17 @@ export default function Home() {
           <img src="/doomscroll.jpg" alt="Person doomscrolling" />
           <img src="/couple_on_car.jpg" alt="A couple having a great date" />
         </figure>
-        <h2>Reclaim Your Dating Life from the Algorithm</h2>
-        <p>
-          No more endless swiping, ghosting, or wasted hours. One handpicked
-          match each week, spend less time on your screen and more time
-          connecting IRL.
-        </p>
-        <Button variant="black">Learn More</Button>
+        <article className="flex-col">
+          <h2>
+            Reclaim Your Dating Life from the <u>Algorithm</u>
+          </h2>
+          <p>
+            No more endless swiping, ghosting, or wasted hours. One handpicked
+            match each week, spend less time on your screen and more time
+            connecting IRL.
+          </p>
+          <Button variant="black">Learn More</Button>
+        </article>
       </section>
       <section className={styles.how_it_works}>
         <h2>How it works?</h2>
@@ -28,7 +32,7 @@ export default function Home() {
           <figure>
             <img src="/create_profile.jpg" alt="" />
           </figure>
-          <h3>1. Create a public+Private profile</h3>
+          <h3>1. Create a public & a Private profile</h3>
           <p>
             Your profile is only viewed by our matchmakers and helps them find
             your match
@@ -72,13 +76,48 @@ export default function Home() {
         <figure className={styles.img_container}>
           <img src="/cta.jpg" alt="A person signing up for our service" />
         </figure>
-        <h2>Ready for your handpicked match?</h2>
-        <p>
-          Dating is a deeply personal journey that deserves human insight, not
-          lines of code.
-        </p>
-        <Button variant="black">Sign Up Now</Button>
+        <article className="flex-col">
+          <h2>Ready for your handpicked match?</h2>
+          <p>
+            Dating is a deeply personal journey that deserves human insight, not
+            lines of code.
+          </p>
+          <Button variant="black">Sign Up Now</Button>
+        </article>
       </section>
+      {/* <section>
+        <h2>Meet our Matchmakers</h2>
+        <article>
+          <figure>
+            <img src="/matchmaker1.jpg" alt="A matchmaker" />
+          </figure>
+          <h3>Matchmaker 1</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            tincidunt, erat nec volutpat.
+          </p>
+        </article>
+        <article>
+          <figure>
+            <img src="/matchmaker2.jpg" alt="A matchmaker" />
+          </figure>
+          <h3>Matchmaker 2</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            tincidunt, erat nec volutpat.
+          </p>
+        </article>
+        <article>
+          <figure>
+            <img src="/matchmaker3.jpg" alt="A matchmaker" />
+          </figure>
+          <h3>Matchmaker 3</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            tincidunt, erat nec volutpat.
+          </p>
+        </article>
+      </section> */}
     </main>
   );
 }
