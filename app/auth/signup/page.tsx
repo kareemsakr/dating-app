@@ -37,7 +37,7 @@ const SignUpPage = () => {
           placeholder={getMinAllowedBdate()}
           max={getMinAllowedBdate()}
           required
-          onChange={(e) => {}}
+          onChange={() => {}}
         />
         <label htmlFor="password">Password</label>
         <input

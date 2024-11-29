@@ -33,7 +33,7 @@ const LoginPage = () => {
           Login <ArrowRightIcon />
         </Button>
         <Link className={styles.sign_up_link} href={SIGNUP_URL}>
-          Don't have an account? Sign up
+          Don&apos;t have an account? Sign up
         </Link>
       </form>
     </>
