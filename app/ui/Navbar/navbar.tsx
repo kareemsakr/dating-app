@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./navbar.module.css";
-import { APP_NAME } from "@/app/lib/constants";
+import { APP_NAME, LOGIN_URL, SIGNUP_URL } from "@/app/lib/constants";
 import clsx from "clsx";
 import Link from "next/link";
 import Image from "next/image";
@@ -60,14 +60,18 @@ const MenuItems = function ({ className }: { className: string }) {
       </li>
       <li className={styles.spacer}></li>
       <li>
-        <Button variant="primary" full>
-          <Link href="/sign_up">Sign Up</Link>
-        </Button>
+        <Link href={SIGNUP_URL}>
+          <Button variant="primary" full>
+            Sign Up
+          </Button>
+        </Link>
       </li>
       <li>
-        <Button variant="hollow" full>
-          <Link href="/login">Login</Link>
-        </Button>
+        <Link href={LOGIN_URL}>
+          <Button variant="hollow" full>
+            Login
+          </Button>
+        </Link>
       </li>
     </ul>
   );

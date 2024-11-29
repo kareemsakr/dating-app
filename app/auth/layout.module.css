@@ -1,0 +1,46 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+  & .section {
+    width: 100%;
+    max-width: 400px;
+    padding: var(--l);
+    border-radius: 5px;
+    background-color: var(--background);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  & .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--l);
+  }
+  & .form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--m);
+
+    & input {
+      padding: var(--s) var(--m);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+    }
+  }
+
+  & .sign_up_link {
+    text-align: center;
+    align-self: center;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 0.3s ease-in-out;
+
+    &:hover {
+      background-size: 100% 1px;
+    }
+  }
+}

@@ -2,6 +2,8 @@ import React from "react";
 import styles from "./button.module.css";
 import clsx from "clsx";
 
+import { ButtonHTMLAttributes } from "react";
+
 export default function Button({
   children,
   variant = "primary",
@@ -10,14 +12,14 @@ export default function Button({
   medium = false,
   disabled = false,
   ...props
-}: Readonly<{
+}: ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   variant?: string;
   large?: boolean;
   medium?: boolean;
   disabled?: boolean;
   full?: boolean;
-}>) {
+}) {
   return (
     <button
       className={clsx(styles.button, {
@@ -30,6 +32,7 @@ export default function Button({
         [styles.disabled]: disabled,
         [styles.full]: full,
       })}
+      disabled={disabled}
       {...props}
     >
       {children}

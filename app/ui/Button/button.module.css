@@ -3,6 +3,17 @@
   padding: 1em 2em;
   border-radius: var(--6xl);
   transition: all 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  cursor: pointer;
+  align-self: center;
+
+  & svg {
+    width: 1.4em;
+    height: 1.4em;
+  }
 
   &:hover {
     transform: scale(1.05);
