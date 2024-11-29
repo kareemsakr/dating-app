@@ -28,6 +28,12 @@ export default function Home() {
       </section>
       <section className={styles.how_it_works}>
         <h2>How it works?</h2>
+        {/* <ol>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ol> */}
         <article>
           <figure>
             <img src="/create_profile.jpg" alt="" />
