@@ -12,7 +12,7 @@ export const authConfig = {
       if (isOnMainApp) {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn && isOnMainApp) {
+      } else if (isLoggedIn) {
         return Response.redirect(new URL("/app", nextUrl));
       }
       return true;
