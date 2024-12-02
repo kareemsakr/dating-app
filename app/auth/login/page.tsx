@@ -1,17 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { useActionState } from "react";
 import styles from "../layout.module.css";
 import Button from "../../ui/Button";
-import { ArrowRightIcon } from "@heroicons/react/20/solid";
+import {
+  ArrowRightIcon,
+  ExclamationCircleIcon,
+} from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { SIGNUP_URL } from "@/app/lib/constants";
+import { authenticate } from "@/app/lib/actions";
 
 const LoginPage = () => {
+  const [errorMessage, formAction, isPending] = useActionState(
+    authenticate,
+    undefined
+  );
   return (
     <>
       <h1 className={styles.title}>Login</h1>
-      <form className={styles.form} action="/login" method="post">
+      <form action={formAction} className={styles.form}>
         <label htmlFor="email">Email</label>
         <input
           type="text"
@@ -29,7 +37,19 @@ const LoginPage = () => {
           minLength={8}
           placeholder="********"
         />
-        <Button type="submit" variant="primary">
+        <div
+          className="flex h-8 items-end space-x-1"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          {errorMessage && (
+            <>
+              <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+              <p className="text-sm text-red-500">{errorMessage}</p>
+            </>
+          )}
+        </div>
+        <Button type="submit" variant="primary" aria-disabled={isPending}>
           Login <ArrowRightIcon />
         </Button>
         <Link className={styles.sign_up_link} href={SIGNUP_URL}>
