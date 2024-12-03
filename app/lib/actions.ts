@@ -37,10 +37,7 @@ export async function logout() {
   }
 }
 
-export async function registerUser(
-  prevState: void | undefined,
-  formData: FormData
-) {
+export async function registerUser(prevState: unknown, formData: FormData) {
   try {
     const user: User = {
       name: formData.get("name") as string,
