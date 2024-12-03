@@ -1,55 +1,34 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import styles from "./navbar.module.css";
-import { APP_NAME, LOGIN_URL, SIGNUP_URL } from "@/app/lib/constants";
-import clsx from "clsx";
+import { LOGIN_URL, SIGNUP_URL } from "@/app/lib/constants";
 import Link from "next/link";
-import Image from "next/image";
 import Button from "../Button";
+import MobileNav from "./mobileNav";
+import { auth } from "@/auth";
+import LogoutButton from "./logoutButton";
+import BrandButton from "./brandButton";
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
-
-  const toggleMenu = () => {
-    if (isOpen) {
-      setIsClosing(true);
-      setTimeout(() => {
-        setIsOpen(false);
-        setIsClosing(false);
-      }, 500); // Match the duration of the slide-out animation
-    } else {
-      setIsOpen(true);
-    }
-  };
+const Navbar = async () => {
+  const session = await auth();
 
   return (
     <nav className={styles.navbar}>
       <BrandButton />
-      <button className={clsx(styles.hamburger_menu)} onClick={toggleMenu}>
-        ☰
-      </button>
-      {(isOpen || isClosing) && (
-        <div className={clsx(styles.menu, { [styles.slide_out]: isClosing })}>
-          <header className={styles.menu_navigation}>
-            <BrandButton />
-            <button
-              className={styles.closeButton}
-              onClick={toggleMenu}
-              aria-label="Close menu"
-            >
-              &times;
-            </button>
-          </header>
-          <MenuItems className={styles.menu_button_list} />
-        </div>
-      )}
-      <MenuItems className={styles.desktop_menu} />
+      <MobileNav>
+        <MenuItems className={styles.menu_button_list} isLoggedIn={!!session} />
+      </MobileNav>
+      <MenuItems className={styles.desktop_menu} isLoggedIn={!!session} />
     </nav>
   );
 };
 
-const MenuItems = function ({ className }: { className: string }) {
+const MenuItems = function ({
+  className,
+  isLoggedIn,
+}: {
+  className: string;
+  isLoggedIn?: boolean;
+}) {
   return (
     <ul className={className}>
       <li>
@@ -59,30 +38,29 @@ const MenuItems = function ({ className }: { className: string }) {
         <Link href="/about">About</Link>
       </li>
       <li className={styles.spacer}></li>
-      <li>
-        <Link href={SIGNUP_URL}>
-          <Button variant="primary" full>
-            Sign Up
-          </Button>
-        </Link>
-      </li>
-      <li>
-        <Link href={LOGIN_URL}>
-          <Button variant="hollow" full>
-            Login
-          </Button>
-        </Link>
-      </li>
+      {isLoggedIn ? (
+        <li>
+          <LogoutButton />
+        </li>
+      ) : (
+        <>
+          <li>
+            <Link href={SIGNUP_URL}>
+              <Button variant="primary" full>
+                Sign Up
+              </Button>
+            </Link>
+          </li>
+          <li>
+            <Link href={LOGIN_URL}>
+              <Button variant="hollow" full>
+                Login
+              </Button>
+            </Link>
+          </li>
+        </>
+      )}
     </ul>
-  );
-};
-
-const BrandButton = function () {
-  return (
-    <Link href="/" className={styles.brand_button}>
-      <Image src="/logo_hollow_nobg.svg" alt="logo" width={20} height={20} />
-      {APP_NAME}
-    </Link>
   );
 };
 
