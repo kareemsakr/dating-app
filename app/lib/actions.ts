@@ -1,6 +1,9 @@
 "use server";
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
+import { createUser } from "@/app/lib/db";
+import { User } from "./definitions";
+import { redirect } from "next/navigation";
 
 export async function authenticate(
   prevState: string | undefined,
@@ -17,6 +20,43 @@ export async function authenticate(
           return "Something went wrong.";
       }
     }
+    throw error;
+  } finally {
+    redirect("/app");
+  }
+}
+
+export async function logout() {
+  try {
+    await signOut();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  } finally {
+    redirect("/");
+  }
+}
+
+export async function registerUser(
+  prevState: void | undefined,
+  formData: FormData
+) {
+  try {
+    const user: User = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+      birthdate: new Date(formData.get("birthdate") as string),
+    };
+    await createUser(user);
+
+    const authData = new FormData();
+    authData.append("email", user.email);
+    authData.append("password", user.password);
+
+    return await authenticate(undefined, authData);
+  } catch (error) {
+    console.error(error);
     throw error;
   }
 }

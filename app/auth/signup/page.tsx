@@ -1,18 +1,27 @@
 "use client";
 
-import React from "react";
+import React, { useActionState } from "react";
 import styles from "../layout.module.css";
 import { getMinAllowedBdate } from "@/app/lib/utlis";
 import { LOGIN_URL } from "@/app/lib/constants";
 import Link from "next/link";
 import Button from "@/app/ui/Button";
-import { ArrowRightIcon } from "@heroicons/react/16/solid";
+import {
+  ArrowRightIcon,
+  ExclamationCircleIcon,
+} from "@heroicons/react/16/solid";
+import { registerUser } from "@/app/lib/actions";
 
 const SignUpPage = () => {
+  const [errorMessage, formAction, isPending] = useActionState(
+    registerUser,
+    undefined
+  );
+
   return (
     <>
       <h1 className={styles.title}>Sign Up</h1>
-      <form className={styles.form} action="/signup" method="post">
+      <form className={styles.form} action={formAction}>
         <label htmlFor="name">Name</label>
         <input
           type="text"
@@ -37,7 +46,6 @@ const SignUpPage = () => {
           placeholder={getMinAllowedBdate()}
           max={getMinAllowedBdate()}
           required
-          onChange={() => {}}
         />
         <label htmlFor="password">Password</label>
         <input
@@ -57,12 +65,18 @@ const SignUpPage = () => {
           minLength={8}
           placeholder="********"
         />
-        <Button type="submit" variant="primary">
-          Login <ArrowRightIcon />
+        <Button type="submit" variant="primary" aria-disabled={isPending}>
+          Sign Up <ArrowRightIcon />
         </Button>
         <Link className={styles.sign_up_link} href={LOGIN_URL}>
           Already have an account? Login
         </Link>
+        {!!errorMessage && (
+          <>
+            <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+            <p className="text-sm text-red-500">{errorMessage}</p>
+          </>
+        )}
       </form>
     </>
   );

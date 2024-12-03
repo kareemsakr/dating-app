@@ -9,6 +9,9 @@ export const authConfig = {
       const isLoggedIn = !!auth?.user;
       console.log("isLoggedIn", isLoggedIn);
       const isOnMainApp = nextUrl.pathname.startsWith("/app");
+
+      if (nextUrl.pathname === "/") return true; // Allow all requests to the landing page
+
       if (isOnMainApp) {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
