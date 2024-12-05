@@ -55,6 +55,17 @@ export async function registerUser(prevState: unknown, formData: FormData) {
 
     return await authenticate(undefined, authData);
   } catch (error) {
+    if (true) {
+      // TODO: Update the condition to check if the error is due to email already in use
+      return {
+        fieldData: {
+          name: formData.get("name")?.toString(),
+          email: formData.get("email")?.toString(),
+          birthdate: formData.get("birthdate")?.toString(),
+        },
+        errorMessage: "Email already in use.",
+      };
+    }
     console.error(error);
     throw error;
   }
