@@ -3,26 +3,30 @@ import { signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
 import { createUser } from "@/app/lib/db";
 import { User } from "./definitions";
-import { redirect } from "next/navigation";
 
-export async function authenticate(
-  prevState: string | undefined,
-  formData: FormData
-) {
+export async function authenticate(prevState: unknown, formData: FormData) {
   try {
-    await signIn("credentials", formData);
+    await signIn("credentials", {
+      email: formData.get("email"),
+      password: formData.get("password"),
+      redirectTo: "/app",
+    });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return "Invalid credentials.";
+          return {
+            fieldData: { email: formData.get("email")?.toString() },
+            errorMessage: "Invalid credentials.",
+          };
         default:
-          return "Something went wrong.";
+          return {
+            fieldData: { email: formData.get("email")?.toString() },
+            errorMessage: "Something went wront.",
+          };
       }
     }
     throw error;
-  } finally {
-    redirect("/app");
   }
 }
 
@@ -32,8 +36,6 @@ export async function logout() {
   } catch (error) {
     console.error(error);
     throw error;
-  } finally {
-    redirect("/");
   }
 }
 

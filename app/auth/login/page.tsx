@@ -12,10 +12,7 @@ import { SIGNUP_URL } from "@/app/lib/constants";
 import { authenticate } from "@/app/lib/actions";
 
 const LoginPage = () => {
-  const [errorMessage, formAction, isPending] = useActionState(
-    authenticate,
-    undefined
-  );
+  const [data, formAction, isPending] = useActionState(authenticate, undefined);
   return (
     <>
       <h1 className={styles.title}>Login</h1>
@@ -25,6 +22,7 @@ const LoginPage = () => {
           type="text"
           id="email"
           name="email"
+          defaultValue={data?.fieldData.email}
           required
           placeholder="youremail@domain.com"
         />
@@ -42,10 +40,10 @@ const LoginPage = () => {
           aria-live="polite"
           aria-atomic="true"
         >
-          {errorMessage && (
+          {data?.errorMessage && (
             <>
               <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">{errorMessage}</p>
+              <p className="text-sm text-red-500">{data?.errorMessage}</p>
             </>
           )}
         </div>

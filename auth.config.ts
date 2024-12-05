@@ -1,8 +1,9 @@
 import type { NextAuthConfig } from "next-auth";
+import { NextResponse } from "next/server";
 
 export const authConfig = {
   pages: {
-    signIn: "auth/login",
+    signIn: "/auth/login",
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
@@ -10,16 +11,23 @@ export const authConfig = {
       console.log("isLoggedIn", isLoggedIn);
       const isOnMainApp = nextUrl.pathname.startsWith("/app");
 
-      if (nextUrl.pathname === "/") return true; // Allow all requests to the landing page
+      if (nextUrl.pathname === "/") return true; // Always allow all requests to the landing page
+
+      const authPages = ["/auth/login", "/auth/signup"];
+      const isAuthPage = authPages.includes(nextUrl.pathname);
+
+      if (isLoggedIn && isAuthPage) {
+        const url = nextUrl.clone();
+        url.pathname = "/app";
+        return NextResponse.redirect(url);
+      }
 
       if (isOnMainApp) {
         if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL("/app", nextUrl));
+        return false; // Redirect to login page
       }
       return true;
     },
   },
-  providers: [], // Add providers with an empty array for now
+  providers: [],
 } satisfies NextAuthConfig;
