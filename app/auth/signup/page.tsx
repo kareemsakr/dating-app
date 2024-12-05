@@ -13,10 +13,7 @@ import {
 import { registerUser } from "@/app/lib/actions";
 
 const SignUpPage = () => {
-  const [errorMessage, formAction, isPending] = useActionState(
-    registerUser,
-    undefined
-  );
+  const [data, formAction, isPending] = useActionState(registerUser, undefined);
 
   return (
     <>
@@ -71,10 +68,10 @@ const SignUpPage = () => {
         <Link className={styles.sign_up_link} href={LOGIN_URL}>
           Already have an account? Login
         </Link>
-        {!!errorMessage && (
+        {!!data?.errorMessage && (
           <>
             <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-            <p className="text-sm text-red-500">{errorMessage}</p>
+            <p className="text-sm text-red-500">{data?.errorMessage}</p>
           </>
         )}
       </form>
