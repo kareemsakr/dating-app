@@ -5,7 +5,9 @@ CREATE TABLE IF NOT EXISTS users (
       name VARCHAR(255) NOT NULL,
       email TEXT NOT NULL UNIQUE,
       birthdate DATE NOT NULL,
-      password TEXT NOT NULL
+      password TEXT NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- TODO: Run migration
+      is_active BOOLEAN DEFAULT TRUE
     );
 
 CREATE TABLE IF NOT EXISTS profile (
@@ -19,4 +21,22 @@ CREATE TABLE IF NOT EXISTS profile (
         avatar TEXT,
         FOREIGN KEY (user_id) REFERENCES users(id),
         UNIQUE(user_id),
+        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        is_active BOOLEAN DEFAULT TRUE
 );
+
+
+CREATE OR REPLACE FUNCTION update_last_updated_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.last_updated = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+-- Then create the trigger
+CREATE TRIGGER update_profile_last_updated
+    BEFORE UPDATE
+    ON profile
+    FOR EACH ROW
+    EXECUTE FUNCTION update_last_updated_column();
