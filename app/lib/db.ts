@@ -67,6 +67,10 @@ export async function updateProfile(userId: string, profileData: Profile) {
     }
   } catch (error) {
     console.error("Failed to Update Profile:", error);
-    throw new Error((error as any)?.detail || "Failed to update profile.");
+    if (error instanceof Error && "detail" in error) {
+      throw new Error((error as { detail: string }).detail);
+    } else {
+      throw new Error("Failed to update profile.");
+    }
   }
 }
