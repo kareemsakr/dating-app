@@ -6,22 +6,22 @@ CREATE TABLE IF NOT EXISTS users (
       email TEXT NOT NULL UNIQUE,
       birthdate DATE NOT NULL,
       password TEXT NOT NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- TODO: Run migration
-      is_active BOOLEAN DEFAULT TRUE
+    --   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- TODO: Run migration
+      is_active BOOLEAN DEFAULT TRUE, -- TODO: Run migration
+      gender VARCHAR(255),
+      CONSTRAINT gender_check CHECK (gender IN ('male', 'female', 'other'))
     );
 
 CREATE TABLE IF NOT EXISTS profile (
-        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        user_id UUID NOT NULL,
+        user_id UUID PRIMARY KEY,
+        FOREIGN KEY (user_id) REFERENCES users(id),
         bio TEXT,
         looking_for TEXT,
         interests TEXT,
-        tagline TEXT,
         location TEXT,
-        avatar TEXT,
-        FOREIGN KEY (user_id) REFERENCES users(id),
-        UNIQUE(user_id),
-        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        avatar_url TEXT,
+        non_negotiables TEXT,
+        -- last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- TODO: Run migration
         is_active BOOLEAN DEFAULT TRUE
 );
 

@@ -26,6 +26,8 @@ const SignUpPage = () => {
           name="name"
           required
           placeholder="John Doe"
+          defaultValue={data?.fieldData?.name}
+          className={styles.input}
         />
         <label htmlFor="email">Email</label>
         <input
@@ -34,6 +36,8 @@ const SignUpPage = () => {
           name="email"
           required
           placeholder="youremail@domain.com"
+          defaultValue={data?.fieldData?.email}
+          className={styles.input}
         />
         <label htmlFor="birthdate">Birthday</label>
         <input
@@ -43,7 +47,49 @@ const SignUpPage = () => {
           placeholder={getMinAllowedBdate()}
           max={getMinAllowedBdate()}
           required
+          defaultValue={data?.fieldData?.birthdate}
+          className={styles.input}
         />
+        <fieldset className="flex gap-2">
+          <legend className="pb-3">Gender:</legend>
+
+          <input
+            type="radio"
+            id="male"
+            name="gender"
+            value="male"
+            required
+            defaultChecked={data?.fieldData?.gender === "male"}
+            className="radio radio-primary"
+          />
+          <label htmlFor="male" className="pr-3">
+            Male
+          </label>
+
+          <input
+            type="radio"
+            id="female"
+            name="gender"
+            value="female"
+            defaultChecked={data?.fieldData?.gender === "female"}
+            className="radio radio-primary"
+          />
+          <label htmlFor="female" className="pr-3">
+            Female
+          </label>
+
+          <input
+            type="radio"
+            id="other"
+            name="gender"
+            value="other"
+            defaultChecked={data?.fieldData?.gender === "other"}
+            className="radio radio-primary"
+          />
+          <label htmlFor="other" className="pr-3">
+            Other
+          </label>
+        </fieldset>
         <label htmlFor="password">Password</label>
         <input
           type="password"
@@ -52,6 +98,7 @@ const SignUpPage = () => {
           required
           minLength={8}
           placeholder="********"
+          className={styles.input}
         />
         <label htmlFor="confirmPassword">Confirm Password</label>
         <input
@@ -61,6 +108,7 @@ const SignUpPage = () => {
           required
           minLength={8}
           placeholder="********"
+          className={styles.input}
         />
         <Button type="submit" variant="primary" aria-disabled={isPending}>
           Sign Up <ArrowRightIcon />

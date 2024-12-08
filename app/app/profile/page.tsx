@@ -1,8 +1,16 @@
-export default function ProfilePage() {
+import { getProfile, getUser } from "@/app/lib/actions";
+import ProfilePage from "./profile";
+import { auth } from "@/auth";
+
+export default async function Page() {
+  const session = await auth();
+  const user = await getUser(session?.user?.email as string);
+  const profile = await getProfile(user?.id as string);
+  console.log("profile", profile);
+
   return (
-    <>
-      <h1>Profile</h1>
-      <p>This is the profile page.</p>
-    </>
+    <main>
+      <ProfilePage user={user} profile={profile} />
+    </main>
   );
 }

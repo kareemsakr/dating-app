@@ -24,6 +24,7 @@ const LoginPage = () => {
           name="email"
           defaultValue={data?.fieldData.email}
           required
+          className={styles.input}
           placeholder="youremail@domain.com"
         />
         <label htmlFor="password">Password</label>
@@ -33,6 +34,7 @@ const LoginPage = () => {
           name="password"
           required
           minLength={8}
+          className={styles.input}
           placeholder="********"
         />
         <div
