@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { updateProfile } from "@/app/lib/actions";
 import { User, Profile } from "@/app/lib/definitions";
+import Image from "next/image";
 import Button from "@/app/ui/Button";
 
 interface ProfilePageProps {
@@ -25,9 +26,9 @@ export default function ProfilePage({ user, profile }: ProfilePageProps) {
     <article className="p-6">
       <figure className="flex flex-col items-center mb-5">
         <div className="avatar">
-          <img
+          <Image
             className="max-w-24 md:max-w-32 lg:max-w-72 rounded-full"
-            src={data?.fieldData?.avatar_url}
+            src={data?.fieldData?.avatar_url as string}
             alt="Profile picture"
           />
           {isEditing && <PencilSquareIcon className="size-6 self-end" />}

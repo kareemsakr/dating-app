@@ -33,7 +33,11 @@ export async function createUser(user: User) {
     `;
   } catch (error) {
     console.error("Failed to create user:", error);
-    throw new Error((error as any)?.detail || "Failed to create user.");
+    if (error instanceof Error && "detail" in error) {
+      throw new Error((error as { detail: string }).detail);
+    } else {
+      throw new Error("Failed to create user.");
+    }
   }
 }
 
