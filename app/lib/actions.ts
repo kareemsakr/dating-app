@@ -14,6 +14,7 @@ export async function authenticate(_: unknown, formData: FormData) {
     });
   } catch (error) {
     if (error instanceof AuthError) {
+      console.error("AuthError: ", error);
       switch (error.type) {
         case "CredentialsSignin":
           return {
@@ -67,20 +68,21 @@ export async function registerUser(prevState: unknown, formData: FormData) {
     authData.append("email", user.email);
     authData.append("password", user.password);
 
-    await authenticate(undefined, authData);
+    return await authenticate(undefined, authData);
   } catch (error) {
     // check for errors coming from the database
-
-    return {
-      fieldData: {
-        name: formData.get("name")?.toString(),
-        email: formData.get("email")?.toString(),
-        birthdate: formData.get("birthdate")?.toString(),
-        gender: formData.get("gender")?.toString(),
-      },
-      errorMessage:
-        error instanceof Error ? error.message : "Something went wrong.",
-    };
+    // check if error is from the database
+    throw error;
+    // return {
+    //   fieldData: {
+    //     name: formData.get("name")?.toString(),
+    //     email: formData.get("email")?.toString(),
+    //     birthdate: formData.get("birthdate")?.toString(),
+    //     gender: formData.get("gender")?.toString(),
+    //   },
+    //   errorMessage:
+    //     error instanceof Error ? error.message : "Something went wrong.",
+    // };
   }
 }
 
