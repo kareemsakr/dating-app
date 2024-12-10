@@ -80,7 +80,9 @@ export async function registerUser(prevState: unknown, formData: FormData) {
 
     await authenticate(undefined, authData);
   } catch (error) {
-    if ((error as any)?.digest?.includes("NEXT_REDIRECT")) {
+    if (
+      (error as { digest: Array<string> })?.digest?.includes("NEXT_REDIRECT")
+    ) {
       throw error;
     }
 
