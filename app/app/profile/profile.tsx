@@ -7,7 +7,6 @@ import {
 } from "@heroicons/react/24/outline";
 import { updateProfile } from "@/app/lib/actions";
 import { User, Profile } from "@/app/lib/definitions";
-import Image from "next/image";
 import Button from "@/app/ui/Button";
 
 interface ProfilePageProps {
@@ -22,22 +21,25 @@ export default function ProfilePage({ user, profile }: ProfilePageProps) {
     updateProfile,
     profile ? { fieldData: profile, errorMessage: undefined } : undefined
   );
+
   return (
     <article className="p-6">
       <figure className="flex flex-col items-center mb-5">
-        <div className="avatar">
-          <Image
-            className="max-w-24 md:max-w-32 lg:max-w-72 rounded-full"
-            src={data?.fieldData?.avatar_url as string}
+        <div className="avatar w-24 h-24 md:w-32 md:h-32 lg:w-64 lg:h-64 relative">
+          <img
+            className="rounded-full"
+            src={(data?.fieldData?.avatar_url as string) || "/avatar.png"}
             alt="Profile picture"
           />
-          {isEditing && <PencilSquareIcon className="size-6 self-end" />}
+          {isEditing && (
+            <PencilSquareIcon className="size-6 self-end absolute right-0 bottom-0" />
+          )}
         </div>
         <figcaption className="flex flex-col items-center">
           <h1 className="text-3xl md:text-4xl font-semibold">{user?.name}</h1>
           <div className="flex gap-3 items-center">
             <p className="badge badge-primary text-white">
-              {data?.fieldData?.location}
+              {data?.fieldData?.location || "Earth, The Milky Way"}
             </p>
             {isEditing && <PencilSquareIcon className="size-6 self-end" />}
           </div>
