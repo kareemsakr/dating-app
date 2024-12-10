@@ -78,21 +78,22 @@ export async function registerUser(prevState: unknown, formData: FormData) {
     authData.append("email", user.email);
     authData.append("password", user.password);
 
-    return await authenticate(undefined, authData);
+    await authenticate(undefined, authData);
   } catch (error) {
-    // check for errors coming from the database
-    // check if error is from the database
-    throw error;
-    // return {
-    //   fieldData: {
-    //     name: formData.get("name")?.toString(),
-    //     email: formData.get("email")?.toString(),
-    //     birthdate: formData.get("birthdate")?.toString(),
-    //     gender: formData.get("gender")?.toString(),
-    //   },
-    //   errorMessage:
-    //     error instanceof Error ? error.message : "Something went wrong.",
-    // };
+    if ((error as any)?.digest?.includes("NEXT_REDIRECT")) {
+      throw error;
+    }
+
+    return {
+      fieldData: {
+        name: formData.get("name")?.toString(),
+        email: formData.get("email")?.toString(),
+        birthdate: formData.get("birthdate")?.toString(),
+        gender: formData.get("gender")?.toString(),
+      },
+      errorMessage:
+        error instanceof Error ? error.message : "Something went wrong.",
+    };
   }
 }
 
