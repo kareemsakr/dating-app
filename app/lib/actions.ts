@@ -4,6 +4,16 @@ import { AuthError } from "next-auth";
 import * as db from "@/app/lib/db";
 import { User, Gender, Profile } from "./definitions";
 import { auth } from "@/auth";
+import { put } from "@vercel/blob";
+import { revalidatePath } from "next/cache";
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
 
 export async function authenticate(_: unknown, formData: FormData) {
   try {
@@ -107,9 +117,6 @@ export async function getUser(email: string) {
 }
 
 export async function updateProfile(_: unknown, formData: FormData) {
-  for (const [key, value] of formData.entries()) {
-    console.log(`${key}: ${value}`);
-  }
   try {
     const session = await auth();
     if (!session) {
@@ -122,6 +129,20 @@ export async function updateProfile(_: unknown, formData: FormData) {
     }
     const { id } = user;
 
+    let blob = undefined;
+    if (formData.get("avatar")) {
+      const imageFile = formData.get("avatar") as File;
+      if (!ACCEPTED_IMAGE_TYPES.includes(imageFile.type)) {
+        throw new Error("File must be an image (JPEG, PNG or WebP)");
+      }
+      if (imageFile.size > MAX_FILE_SIZE) {
+        throw new Error("File size must be less than 5MB");
+      }
+      blob = await put(`avatar_${user.email}`, imageFile, {
+        access: "public",
+      });
+    }
+
     const profile: Profile = {
       userId: id as string,
       bio: formData.get("bio") as string,
@@ -129,12 +150,15 @@ export async function updateProfile(_: unknown, formData: FormData) {
       interests: formData.get("interests") as string,
       non_negotiables: formData.get("non_negotiables") as string,
       location: formData.get("location") as string,
-      avatar_url: formData.get("avatar_url") as string,
+      avatar_url: blob?.url || (formData.get("avatar_url") as string),
     };
 
     const res = await db.updateProfile(profile.userId, profile);
 
     if (res?.rowCount == 0) throw Error("Failed to update profile");
+
+    revalidatePath("/app/profile");
+
     return { fieldData: profile };
   } catch (error) {
     console.error(error);
@@ -145,7 +169,7 @@ export async function updateProfile(_: unknown, formData: FormData) {
         interests: formData.get("interests")?.toString(),
         non_negotiables: formData.get("non_negotiables")?.toString(),
         location: formData.get("location")?.toString(),
-        avatar_url: formData.get("avatar_url")?.toString(),
+        avatar_url: formData.get("avatar_url") as string,
       },
       errorMessage:
         error instanceof Error ? error.message : "Something went wrong.",

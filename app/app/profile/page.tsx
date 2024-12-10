@@ -6,7 +6,6 @@ export default async function Page() {
   const session = await auth();
   const user = await getUser(session?.user?.email as string);
   const profile = await getProfile(user?.id as string);
-  console.log("profile", profile);
 
   return (
     <main>
