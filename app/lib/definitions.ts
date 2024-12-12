@@ -5,6 +5,7 @@ export type User = {
   password: string;
   birthdate: Date;
   gender: Gender;
+  is_admin?: boolean;
 };
 
 export type Profile = {

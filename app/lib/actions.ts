@@ -179,3 +179,24 @@ export async function updateProfile(_: unknown, formData: FormData) {
     };
   }
 }
+
+interface Action {
+  (...args: any[]): Promise<unknown>;
+}
+
+interface WithAdminProtection {
+  (action: Action): Action;
+}
+
+const withAdminProtection: WithAdminProtection = (action) => {
+  return async (...args: unknown[]): Promise<unknown> => {
+    const session = await auth();
+    if (!session?.user?.isAdmin) {
+      throw new Error("Unauthorized: Admin access required");
+    }
+    return action(...args);
+  };
+};
+
+// The below is an example of how to use the withAdminProtection function
+// export const protextedGetUser = withAdminProtection(getUser);

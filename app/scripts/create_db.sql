@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     --   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- TODO: Run migration
       is_active BOOLEAN DEFAULT TRUE, -- TODO: Run migration
       gender VARCHAR(255),
+      is_admin BOOLEAN DEFAULT FALSE,
       CONSTRAINT gender_check CHECK (gender IN ('male', 'female', 'other'))
     );
 

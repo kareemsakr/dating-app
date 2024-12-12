@@ -1,8 +1,12 @@
-export default function MainPage() {
+import { auth } from "@/auth";
+import { AdminPanel } from "./admin";
+import { UserHomePage } from "./user";
+
+export default async function MainPage() {
+  const { user } = (await auth()) || {};
   return (
     <main className="min-h-screen p-4">
-      <h1 className="text-2xl font-bold">Main Page</h1>
-      <p>Welcome to the main page of the dating app!</p>
+      {user.isAdmin ? <AdminPanel /> : <UserHomePage />}
     </main>
   );
 }

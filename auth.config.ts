@@ -28,6 +28,16 @@ export const authConfig = {
       }
       return true;
     },
+    jwt: async ({ token, user, trigger, session }) => {
+      if (user) {
+        // user object is only available on initial sign in
+        token.is_admin = user.is_admin;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      return { ...session, user: { ...token, isAdmin: token.is_admin } };
+    },
   },
   providers: [],
 } satisfies NextAuthConfig;
