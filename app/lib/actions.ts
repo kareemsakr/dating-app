@@ -6,6 +6,7 @@ import { User, Gender, Profile } from "./definitions";
 import { auth } from "@/auth";
 import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
+import { error } from "console";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 const ACCEPTED_IMAGE_TYPES = [
@@ -186,6 +187,59 @@ interface Action {
 
 interface WithAdminProtection {
   (action: Action): Action;
+}
+
+export async function RequestMatch(_: unknown, formData: FormData) {
+  try {
+    const session = await auth();
+    if (!session) throw Error("Not authenticated");
+    if (session?.user?.isAdmin) throw Error("Admins cannot request matches");
+
+    const profile = await db.getProfile(session.user.sub as string);
+    if (!profile)
+      throw Error("Profile not found, please complete your profile first");
+
+    await db.createMatchRequest(
+      session.user.sub as string,
+      "Placeholder notes"
+    );
+    return { status: "success", message: "Match request created successfully" };
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error);
+
+      return { fieldData: {}, errorMessage: error.message };
+    }
+    throw error;
+  }
+}
+
+export async function searchMatchRequests(searchParams: {
+  status?: string;
+  createdDateStart?: Date;
+  createdDatedEnd?: Date;
+  userId?: string;
+}) {
+  try {
+    const session = await auth();
+    if (!session) throw Error("Not authenticated");
+    if (!session?.user?.isAdmin) throw Error("Admin access required");
+
+    const matchRequests = await db.searchMatchRequests(
+      searchParams.status,
+      searchParams.createdDateStart,
+      searchParams.createdDatedEnd
+      // searchParams.userId
+    );
+    return { data: matchRequests };
+  } catch (error) {
+    // if (error instanceof Error) {
+    //   console.log(error);
+
+    //   return { message: error.message };
+    // }
+    throw error;
+  }
 }
 
 const withAdminProtection: WithAdminProtection = (action) => {

@@ -1,7 +1,11 @@
+import { searchMatchRequests } from "../lib/actions";
+import MatchRequestSearch from "../ui/MatchRequestSearch";
+
 export async function AdminPanel() {
+  const result = await searchMatchRequests({});
   return (
     <>
-      <h1>You are an admin</h1>
+      <MatchRequestSearch matchRequests={result.data || []} />
     </>
   );
 }

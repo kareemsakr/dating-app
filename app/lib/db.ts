@@ -1,5 +1,11 @@
 import { sql } from "@vercel/postgres";
-import type { User, Profile } from "@/app/lib/definitions";
+import type {
+  User,
+  Profile,
+  MatchRequest,
+  Match,
+  matchResultSearchResult,
+} from "@/app/lib/definitions";
 import bcrypt from "bcrypt";
 
 export async function getUser(email: string): Promise<User | undefined> {
@@ -71,6 +77,86 @@ export async function updateProfile(userId: string, profileData: Profile) {
       throw new Error((error as { detail: string }).detail);
     } else {
       throw new Error("Failed to update profile.");
+    }
+  }
+}
+
+export async function createMatchRequest(userId: string, notes: string) {
+  try {
+    const hasActiveRequest =
+      await sql<MatchRequest>`select * from match_requests where status = 'pending' and user_id = ${userId}`;
+    if (hasActiveRequest.rows.length > 0) {
+      throw Error("You already have an active match request.");
+    }
+    await sql<MatchRequest>`INSERT INTO match_requests (user_id, notes)
+              VALUES (${userId}, ${notes})`;
+  } catch (error: Error | any) {
+    console.error("Failed to create match request:", error);
+    if (error instanceof Error && "detail" in error) {
+      throw Error(
+        (error as { detail: string }).detail ||
+          "Failed to create match request."
+      );
+    } else {
+      throw Error(error.message || "Failed to create match request.");
+    }
+  }
+}
+
+export async function searchMatchRequests(
+  status?: string,
+  createdDateStart?: Date,
+  createdDatedEnd?: Date
+  // userId?: string
+) {
+  try {
+    const pageSize = 10; // Number of records per page
+    const pageNumber = 1; // Specific page number
+
+    const offset = (pageNumber - 1) * pageSize;
+    let startDate = new Date("1970-01-01");
+    let endDate = new Date("3000-01-01");
+    if (createdDateStart) startDate = createdDateStart;
+    if (createdDatedEnd) endDate = new Date();
+    const matchRequests = await sql<matchResultSearchResult>`
+    SELECT * FROM match_requests mr
+    inner join users u on u.id = mr.user_id
+    inner join profile p on p.user_id = mr.user_id
+    WHERE created_at BETWEEN ${startDate.toISOString().split("T")[0]} AND ${
+      endDate.toISOString().split("T")[0]
+    }
+      AND status in (${status || "pending"})
+      order by mr.created_at asc
+      LIMIT ${pageSize} OFFSET ${offset}`;
+
+    return matchRequests.rows;
+  } catch (error) {
+    if (error instanceof Error && "detail" in error) {
+      throw Error(
+        (error as { detail: string }).detail ||
+          error.message ||
+          "Failed to search match requests."
+      );
+    } else {
+      throw Error("Failed to search match requests.");
+    }
+  }
+}
+
+export async function createMatch(
+  user1: string,
+  user2: string,
+  matchMakerId: string
+) {
+  try {
+    await sql<Match>`INSERT INTO match (user1, user2, match_maker)
+              VALUES (${user1}, ${user2}, ${matchMakerId})`;
+  } catch (error) {
+    console.error("Failed to create match:", error);
+    if (error instanceof Error && "detail" in error) {
+      throw new Error((error as { detail: string }).detail);
+    } else {
+      throw new Error("Failed to create match.");
     }
   }
 }

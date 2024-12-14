@@ -27,21 +27,25 @@ CREATE TABLE IF NOT EXISTS profile (
 );
 
 CREATE TABLE IF NOT EXISTS match_requests (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
     user_id UUID,
     FOREIGN KEY (user_id) REFERENCES users(id),
     created_at TIMESTAMP,
-    status VARCHAR(255),
+    status VARCHAR(255) DEFAULT 'pending',
     CONSTRAINT status_check CHECK (status IN ('pending', 'closed')),
     notes TEXT,
     is_active BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE IF NOT EXISTS  matches (
-    user1 UUID PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS matches (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user1 UUID,
     FOREIGN KEY (user1) REFERENCES users(id),
     user2 UUID,
     FOREIGN KEY (user2) REFERENCES users(id),
     UNIQUE (user1, user2),
+    match_maker UUID,
+    FOREIGN KEY (match_maker) REFERENCES users(id),
     created_at TIMESTAMP,
     expires_at TIMESTAMP,
     is_active BOOLEAN DEFAULT TRUE

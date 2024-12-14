@@ -3,3 +3,22 @@ export const getMinAllowedBdate = () => {
     .toISOString()
     .split("T")[0];
 };
+
+export function getUpcomingSundayMidnight(): Date {
+  const now = new Date();
+  const daysUntilSunday = 7 - now.getDay();
+  const nextSunday = new Date(now);
+  nextSunday.setDate(now.getDate() + daysUntilSunday);
+  nextSunday.setHours(0, 0, 0, 0);
+  return nextSunday;
+}
+
+export function getAge(birthDate: Date): number {
+  const now = new Date();
+  const diff = now.getTime() - birthDate.getTime();
+  const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+  return age;
+}
+
+export const capitalize = (word: string) =>
+  word.charAt(0).toUpperCase() + word.slice(1);

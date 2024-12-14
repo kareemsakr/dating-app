@@ -9,6 +9,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        orangePeel: "var(--orange-peel)",
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
@@ -20,10 +21,10 @@ export default {
       {
         mytheme: {
           primary: "#ffa83d",
-          // secondary: "#f6d860",
-          // accent: "#37cdbe",
-          // neutral: "#3d4451",
-          // "base-100": "#ffffff",
+          secondary: "#f6d860",
+          accent: "#37cdbe",
+          neutral: "#3d4451",
+          "base-100": "#ffffff",
         },
       },
     ],

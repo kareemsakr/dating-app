@@ -1,6 +1,25 @@
+.tabContainer {
+  display: flex;
+  gap: 0.1rem;
+
+  & .button:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding-right: 0.5rem;
+    padding-left: 1rem;
+  }
+
+  & .button:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding-left: 0.5rem;
+    padding-right: 1rem;
+  }
+}
+
 .button {
   font-size: var(--s);
-  padding: 1em 2em;
+  padding: 0.8em 1.6em;
   border-radius: var(--6xl);
   transition: all 0.3s;
   display: flex;
@@ -8,7 +27,7 @@
   align-items: center;
   gap: 0.5em;
   cursor: pointer;
-  align-self: center;
+  /* align-self: center; */
 
   & svg {
     width: 1.4em;
