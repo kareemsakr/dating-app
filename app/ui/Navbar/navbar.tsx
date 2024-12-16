@@ -3,11 +3,11 @@ import styles from "./navbar.module.css";
 import { LOGIN_URL, SIGNUP_URL } from "@/app/lib/constants";
 import Link from "next/link";
 import Button from "../Button";
-import MobileNav from "./mobileNav";
+// import MobileNav from "./mobileNav";
 import { auth } from "@/auth";
 import BrandButton from "./brandButton";
 import { ProfileMenu } from "./profileMenu";
-import clsx from "clsx";
+// import clsx from "clsx";
 
 const Navbar = async () => {
   const session = await auth();
