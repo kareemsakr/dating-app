@@ -124,7 +124,7 @@ function ViewProfile({
             {matchRequest.location}
           </span>
         </h2>
-        <section className="flex gap-3 items-center">
+        <section className="flex gap-3 items-center mb-6">
           <span>{getAge(matchRequest.birthdate)} y.o.</span>
           <span className="badge badge-primary text-white">
             {capitalize(matchRequest.gender)}
@@ -132,20 +132,28 @@ function ViewProfile({
         </section>
 
         <dl>
-          <div className="mb-4 border rounded px-2 py-1">
-            <dt className="font-semibold">Bio</dt>
+          <div className="mb-7 border border-orangePeel rounded px-2 pt-3 pb-2 relative">
+            <dt className="font-semibold absolute -top-3 bg-background px-2">
+              Bio
+            </dt>
             <dd className="opacity-55">{matchRequest.bio}</dd>
           </div>
-          <div className="mb-4 border rounded px-2 py-1">
-            <dt className="font-semibold">Looking for</dt>
-            <dd className="opacity-55">{matchRequest.looking_for}</dd>{" "}
+          <div className="mb-7 border border-orangePeel rounded px-2 pt-3 pb-2 relative">
+            <dt className="font-semibold absolute -top-3 bg-background px-2">
+              Looking for
+            </dt>
+            <dd className="opacity-55">{matchRequest.looking_for}</dd>
           </div>
-          <div className="mb-4 border rounded px-2 py-1">
-            <dt className="font-semibold">Interests</dt>
+          <div className="mb-7 border border-orangePeel rounded px-2 pt-3 pb-2 relative">
+            <dt className="font-semibold absolute -top-3 bg-background px-2">
+              Interests
+            </dt>
             <dd className="opacity-55">{matchRequest.interests}</dd>
           </div>
-          <div className="mb-4 border rounded px-2 py-1">
-            <dt className="font-semibold">Non Negotiables</dt>
+          <div className="mb-7 border border-orangePeel rounded px-2 pt-3 pb-2 relative">
+            <dt className="font-semibold absolute -top-3 bg-background px-2">
+              Non Negotiables
+            </dt>
             <dd className="opacity-55">{matchRequest.non_negotiables}</dd>
           </div>
         </dl>
