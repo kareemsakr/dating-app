@@ -90,7 +90,7 @@ export async function createMatchRequest(userId: string, notes: string) {
     }
     await sql<MatchRequest>`INSERT INTO match_requests (user_id, notes)
               VALUES (${userId}, ${notes})`;
-  } catch (error: Error | any) {
+  } catch (error: Error | unknown) {
     console.error("Failed to create match request:", error);
     if (error instanceof Error && "detail" in error) {
       throw Error(
@@ -98,7 +98,7 @@ export async function createMatchRequest(userId: string, notes: string) {
           "Failed to create match request."
       );
     } else {
-      throw Error(error.message || "Failed to create match request.");
+      throw Error("Failed to create match request.");
     }
   }
 }
