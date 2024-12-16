@@ -6,6 +6,7 @@ import { User, Gender, Profile } from "./definitions";
 import { auth } from "@/auth";
 import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
+import { profile } from "console";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 const ACCEPTED_IMAGE_TYPES = [
@@ -126,6 +127,8 @@ export async function updateProfile(_: unknown, formData: FormData) {
       throw Error("Not authenticated");
     }
 
+    const dbProfile = await db.getProfile(session.user.sub as string);
+
     const user = await db.getUser(session?.user?.email as string);
     if (!user) {
       throw Error("User not found");
@@ -133,15 +136,16 @@ export async function updateProfile(_: unknown, formData: FormData) {
     const { id } = user;
 
     let blob = undefined;
-    if (formData.get("avatar")) {
-      const imageFile = formData.get("avatar") as File;
-      if (!ACCEPTED_IMAGE_TYPES.includes(imageFile.type)) {
+    const file = formData.get("avatar");
+
+    if (file instanceof File && file.size > 0 && file.name !== "undefined") {
+      if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
         throw new Error("File must be an image (JPEG, PNG or WebP)");
       }
-      if (imageFile.size > MAX_FILE_SIZE) {
+      if (file.size > MAX_FILE_SIZE) {
         throw new Error("File size must be less than 5MB");
       }
-      blob = await put(`avatar_${user.email}`, imageFile, {
+      blob = await put(`avatar_${user.email}`, file, {
         access: "public",
       });
     }
@@ -153,7 +157,7 @@ export async function updateProfile(_: unknown, formData: FormData) {
       interests: formData.get("interests") as string,
       non_negotiables: formData.get("non_negotiables") as string,
       location: formData.get("location") as string,
-      avatar_url: blob?.url || (formData.get("avatar_url") as string),
+      avatar_url: blob?.url || (dbProfile?.avatar_url as string),
     };
 
     const res = await db.updateProfile(profile.userId, profile);

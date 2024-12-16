@@ -78,8 +78,6 @@
 }
 
 .desktop_menu {
-  display: none;
-
   @media screen {
     @media (min-width: 768px) {
       display: flex;

@@ -5,8 +5,9 @@ import Link from "next/link";
 import Button from "../Button";
 import MobileNav from "./mobileNav";
 import { auth } from "@/auth";
-import LogoutButton from "./logoutButton";
 import BrandButton from "./brandButton";
+import { ProfileMenu } from "./profileMenu";
+import clsx from "clsx";
 
 const Navbar = async () => {
   const session = await auth();
@@ -14,9 +15,9 @@ const Navbar = async () => {
   return (
     <nav className={styles.navbar}>
       <BrandButton />
-      <MobileNav>
+      {/* <MobileNav>
         <MenuItems className={styles.menu_button_list} isLoggedIn={!!session} />
-      </MobileNav>
+      </MobileNav> */}
       <MenuItems className={styles.desktop_menu} isLoggedIn={!!session} />
     </nav>
   );
@@ -31,16 +32,16 @@ const MenuItems = function ({
 }) {
   return (
     <ul className={className}>
-      <li>
+      {/* <li>
         <Link href="/about">Events</Link>
       </li>
       <li>
         <Link href="/about">About</Link>
-      </li>
+      </li> */}
       <li className={styles.spacer}></li>
       {isLoggedIn ? (
         <li>
-          <LogoutButton />
+          <ProfileMenu />
         </li>
       ) : (
         <>
