@@ -6,7 +6,6 @@ import { User, Gender, Profile } from "./definitions";
 import { auth } from "@/auth";
 import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
-import { profile } from "console";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 const ACCEPTED_IMAGE_TYPES = [
