@@ -6,7 +6,7 @@ import { User, Gender, Profile } from "./definitions";
 import { auth } from "@/auth";
 import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
-import { error } from "console";
+import exp from "constants";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
 const ACCEPTED_IMAGE_TYPES = [
@@ -181,15 +181,7 @@ export async function updateProfile(_: unknown, formData: FormData) {
   }
 }
 
-interface Action {
-  (...args: any[]): Promise<unknown>;
-}
-
-interface WithAdminProtection {
-  (action: Action): Action;
-}
-
-export async function RequestMatch(_: unknown, formData: FormData) {
+export async function RequestMatch() {
   try {
     const session = await auth();
     if (!session) throw Error("Not authenticated");
@@ -242,6 +234,13 @@ export async function searchMatchRequests(searchParams: {
   }
 }
 
+interface Action {
+  (...args: any[]): Promise<unknown>;
+}
+
+interface WithAdminProtection {
+  (action: Action): Action;
+}
 const withAdminProtection: WithAdminProtection = (action) => {
   return async (...args: unknown[]): Promise<unknown> => {
     const session = await auth();
@@ -253,4 +252,4 @@ const withAdminProtection: WithAdminProtection = (action) => {
 };
 
 // The below is an example of how to use the withAdminProtection function
-// export const protextedGetUser = withAdminProtection(getUser);
+export const protextedGetUser = withAdminProtection(getUser);
