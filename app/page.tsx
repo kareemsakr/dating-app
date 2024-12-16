@@ -8,7 +8,7 @@ export default function Home() {
       <header>
         <Navbar />
       </header>
-      <main>
+      <main className={styles.container}>
         <section className={styles.hero}>
           <h1>Your Forever After</h1>
           <h3>Handpicked by Real People</h3>
