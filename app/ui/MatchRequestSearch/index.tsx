@@ -42,7 +42,7 @@ export default function MatchRequestSearch({
             </tr>
           )}
           {matchRequests?.map((matchRequest) => (
-            <tr key={matchRequest.id} className="relative">
+            <tr key={matchRequest.match_request_id} className="relative">
               <td>
                 <article className="flex items-center gap-3">
                   <figure className="avatar">

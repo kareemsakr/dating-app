@@ -4,6 +4,7 @@ import Button from "../Button";
 import { matchResultSearchResult } from "@/app/lib/definitions";
 import { getAge } from "@/app/lib/utlis";
 import clsx from "clsx";
+import { matchUsers } from "@/app/lib/actions";
 export function MatchSelector({
   match1,
   match2,
@@ -13,6 +14,17 @@ export function MatchSelector({
   match2?: matchResultSearchResult;
   handleDeselectMatch?: (userId: string) => void;
 }) {
+  const handleMatch = async () => {
+    try {
+      if (!match1 || !match2) throw Error("Please select two users to match");
+      const result = await matchUsers(match1, match2);
+      console.log(result);
+      // Handle the result
+    } catch (error) {
+      console.error(error);
+      // Handle any errors
+    }
+  };
   return (
     <section
       className={clsx(
@@ -28,7 +40,7 @@ export function MatchSelector({
         </li>
         <User {...match2} removeMatch={handleDeselectMatch} />
       </ul>
-      <Button>Match ❤️</Button>
+      <Button onClick={handleMatch}>Match ❤️</Button>
     </section>
   );
 }
@@ -56,8 +68,6 @@ const User = ({
         <button
           onClick={() => {
             if (removeMatch && user_id) {
-              console.log("remove match", user_id);
-
               removeMatch(user_id);
             }
           }}

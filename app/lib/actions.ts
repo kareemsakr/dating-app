@@ -2,7 +2,7 @@
 import { signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
 import * as db from "@/app/lib/db";
-import { User, Gender, Profile } from "./definitions";
+import { User, Gender, Profile, matchResultSearchResult } from "./definitions";
 import { auth } from "@/auth";
 import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
@@ -232,6 +232,33 @@ export async function searchMatchRequests(searchParams: {
 
     //   return { message: error.message };
     // }
+    throw error;
+  }
+}
+
+export async function matchUsers(
+  match1: matchResultSearchResult,
+  match2: matchResultSearchResult
+) {
+  try {
+    const session = await auth();
+    if (!session) throw Error("Not authenticated");
+    if (!session?.user?.isAdmin) throw Error("Admin access required");
+
+    await db.createMatch(
+      match1.user_id,
+      match2.user_id,
+      session.user.sub as string
+    );
+    await db.closeMatchRequest(match1.match_request_id);
+    await db.closeMatchRequest(match2.match_request_id);
+    return { status: "success", message: "Users matched successfully" };
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error);
+
+      return { status: "error", message: error.message };
+    }
     throw error;
   }
 }

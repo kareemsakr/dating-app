@@ -119,7 +119,22 @@ export async function searchMatchRequests(
     if (createdDateStart) startDate = createdDateStart;
     if (createdDatedEnd) endDate = new Date();
     const matchRequests = await sql<matchResultSearchResult>`
-    SELECT * FROM match_requests mr
+    SELECT 
+    u.id as user_id,
+    u.name,
+    u.gender,
+    u.birthdate,
+    p.interests,
+    p.avatar_url,
+    mr.id as match_request_id,
+    mr.notes,
+    mr.status,
+    mr.created_at,
+    p.bio,
+    p.looking_for,
+    p.non_negotiables,
+    p.location
+    FROM match_requests mr
     inner join users u on u.id = mr.user_id
     inner join profile p on p.user_id = mr.user_id
     WHERE created_at BETWEEN ${startDate.toISOString().split("T")[0]} AND ${
@@ -149,14 +164,35 @@ export async function createMatch(
   matchMakerId: string
 ) {
   try {
-    await sql<Match>`INSERT INTO match (user1, user2, match_maker)
+    await sql<Match>`INSERT INTO matches (user1, user2, match_maker)
               VALUES (${user1}, ${user2}, ${matchMakerId})`;
   } catch (error) {
     console.error("Failed to create match:", error);
     if (error instanceof Error && "detail" in error) {
+      if (
+        "detail" in error &&
+        (error.detail as string).includes("already exists")
+      )
+        throw new Error("Match already exists");
       throw new Error((error as { detail: string }).detail);
     } else {
       throw new Error("Failed to create match.");
+    }
+  }
+}
+
+export async function closeMatchRequest(matchRequestId: string) {
+  try {
+    console.log("Closing match request", matchRequestId);
+    await sql<MatchRequest>`UPDATE match_requests
+              SET status = 'closed'
+              WHERE id = ${matchRequestId}`;
+  } catch (error) {
+    console.error("Failed to close match request:", error);
+    if (error instanceof Error && "detail" in error) {
+      throw new Error((error as { detail: string }).detail);
+    } else {
+      throw new Error("Failed to close match request.");
     }
   }
 }
