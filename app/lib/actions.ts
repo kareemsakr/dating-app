@@ -252,6 +252,8 @@ export async function matchUsers(
     );
     await db.closeMatchRequest(match1.match_request_id);
     await db.closeMatchRequest(match2.match_request_id);
+    revalidatePath("/app");
+
     return { status: "success", message: "Users matched successfully" };
   } catch (error) {
     if (error instanceof Error) {

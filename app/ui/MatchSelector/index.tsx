@@ -18,6 +18,9 @@ export function MatchSelector({
     try {
       if (!match1 || !match2) throw Error("Please select two users to match");
       const result = await matchUsers(match1, match2);
+      handleDeselectMatch?.(match1.user_id);
+      handleDeselectMatch?.(match2.user_id);
+      //add this as a toast
       console.log(result);
       // Handle the result
     } catch (error) {
