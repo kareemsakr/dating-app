@@ -7,7 +7,9 @@ import { useRef, useState } from "react";
 
 export default function MatchRequestSearch({
   matchRequests,
+  handleSelectMatch,
 }: {
+  handleSelectMatch?: (match: matchResultSearchResult) => void;
   matchRequests: matchResultSearchResult[];
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -76,7 +78,16 @@ export default function MatchRequestSearch({
                   >
                     View
                   </Button>
-                  <Button variant="primary">Select</Button>
+                  <Button
+                    onClick={() => {
+                      handleSelectMatch
+                        ? handleSelectMatch(matchRequest)
+                        : null;
+                    }}
+                    variant="primary"
+                  >
+                    Select
+                  </Button>
                 </TabContainer>
               </td>
             </tr>
@@ -119,7 +130,7 @@ function ViewProfile({
       </figure>
       <div className="card-body">
         <h2 className="card-title md:text-3xl">
-          {matchRequest.name}{" "}
+          {matchRequest.name}
           <span className="text-sm opacity-50 self-center">
             {matchRequest.location}
           </span>
