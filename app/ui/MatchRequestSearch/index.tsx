@@ -82,9 +82,7 @@ export default function MatchRequestSearch({
                   </Button>
                   <Button
                     onClick={() => {
-                      handleSelectMatch
-                        ? handleSelectMatch(matchRequest)
-                        : null;
+                      if (handleSelectMatch) handleSelectMatch(matchRequest);
                     }}
                     variant="primary"
                   >
