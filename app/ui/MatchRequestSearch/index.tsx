@@ -100,7 +100,7 @@ export default function MatchRequestSearch({
             <ViewProfile
               matchRequest={selectedRequest}
               selectHandler={() => {
-                handleSelectMatch ? handleSelectMatch(selectedRequest) : null;
+                if (handleSelectMatch) handleSelectMatch(selectedRequest);
                 closeRef.current?.click();
               }}
             />
