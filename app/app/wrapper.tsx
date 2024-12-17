@@ -23,7 +23,6 @@ export default function Wrapper({
   };
 
   const handleDeselectMatch = (user_id: string) => {
-    console.log("handleDeselectMatch");
     if (user_id === match1?.user_id) {
       setMatch1(null);
     } else if (user_id === match2?.user_id) {

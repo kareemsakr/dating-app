@@ -4,6 +4,7 @@ import { capitalize, getAge } from "@/app/lib/utlis";
 import Button from "../Button";
 import { TabContainer } from "../Button/button";
 import { useRef, useState } from "react";
+import clsx from "clsx";
 
 export default function MatchRequestSearch({
   matchRequests,
@@ -21,7 +22,7 @@ export default function MatchRequestSearch({
     dialogRef.current?.showModal();
   };
   return (
-    <div className="overflow-x-auto">
+    <div className={clsx("overflow-x-auto transition-all")}>
       <table className="table">
         <thead>
           <tr>

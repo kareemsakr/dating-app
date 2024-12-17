@@ -3,6 +3,7 @@ import { PlusIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import Button from "../Button";
 import { matchResultSearchResult } from "@/app/lib/definitions";
 import { getAge } from "@/app/lib/utlis";
+import clsx from "clsx";
 export function MatchSelector({
   match1,
   match2,
@@ -13,7 +14,12 @@ export function MatchSelector({
   handleDeselectMatch?: (userId: string) => void;
 }) {
   return (
-    <section className="flex flex-col items-center mb-2 md:mb-16">
+    <section
+      className={clsx(
+        "flex flex-col items-center mb-2 md:mb-16 transition-all duration-500 ease max-h-0 opacity-0",
+        (match1 || match2) && "max-h-[500px] opacity-100"
+      )}
+    >
       <ul className="flex items-center justify-center gap-2 md:gap-16 mb-4 md:mb-12">
         <User {...match1} removeMatch={handleDeselectMatch} />
         <li className="hidden md:block">
@@ -64,7 +70,7 @@ const User = ({
       <div className="w-32 rounded mb-2">
         <img src={avatar_url} />
       </div>
-      <h3 className="text-xl font-semibold">{name}</h3>
+      <h3 className="text-xl font-semibold text-nowrap">{name}</h3>
       <p className="text-sm opacity-50 mb-2 ">{location}</p>
       <article className="flex gap-2 items-center">
         <p>{birthdate ? getAge(birthdate) : "??"} y.o.</p>
