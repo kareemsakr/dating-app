@@ -1,5 +1,5 @@
 "use client";
-import { PlusIcon, XCircleIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import Button from "../Button";
 import { matchResultSearchResult } from "@/app/lib/definitions";
 import { getAge } from "@/app/lib/utlis";
@@ -16,8 +16,8 @@ export function MatchSelector({
   return (
     <section
       className={clsx(
-        "flex flex-col items-center mb-2 md:mb-16 transition-all duration-500 ease max-h-0 opacity-0",
-        (match1 || match2) && "max-h-[500px] opacity-100"
+        "flex flex-col items-center transition-all duration-500 ease max-h-0 opacity-0",
+        (match1 || match2) && "max-h-[500px] opacity-100 mb-2 md:mb-16"
       )}
     >
       <ul className="flex items-center justify-center gap-2 md:gap-16 mb-4 md:mb-12">

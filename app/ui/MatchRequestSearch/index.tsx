@@ -14,6 +14,7 @@ export default function MatchRequestSearch({
   matchRequests: matchResultSearchResult[];
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
   const [selectedRequest, setSelectedRequest] =
     useState<matchResultSearchResult | null>(null);
 
@@ -97,11 +98,20 @@ export default function MatchRequestSearch({
       </table>
       <dialog ref={dialogRef} className="modal">
         <div className="modal-box card card-side  w-11/12 max-w-5xl p-0 bg-background shadow-custom">
-          {selectedRequest && <ViewProfile matchRequest={selectedRequest} />}
+          {selectedRequest && (
+            <ViewProfile
+              matchRequest={selectedRequest}
+              selectHandler={() => {
+                handleSelectMatch ? handleSelectMatch(selectedRequest) : null;
+                closeRef.current?.click();
+              }}
+            />
+          )}
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button
+                ref={closeRef}
                 onClick={() => setSelectedRequest(null)}
                 className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
               >
@@ -117,8 +127,10 @@ export default function MatchRequestSearch({
 
 function ViewProfile({
   matchRequest,
+  selectHandler,
 }: {
   matchRequest: matchResultSearchResult;
+  selectHandler: () => void;
 }) {
   return (
     <>
@@ -170,7 +182,9 @@ function ViewProfile({
           </div>
         </dl>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">Select</button>
+          <button onClick={() => selectHandler()} className="btn btn-primary">
+            Select
+          </button>
         </div>
       </div>
     </>
