@@ -5,6 +5,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --shadow-color: rgba(0, 0, 0, 0.35);
 
   --orange-peel: #ffa83d;
   --white: hsl(0, 0%, 100%);
@@ -42,7 +43,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: rgb(237, 237, 237);
+    --shadow-color: rgba(237, 237, 237, 0.35);
   }
 }
 

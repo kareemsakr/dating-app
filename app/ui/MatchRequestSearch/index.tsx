@@ -84,7 +84,7 @@ export default function MatchRequestSearch({
         </tbody>
       </table>
       <dialog ref={dialogRef} className="modal">
-        <div className="modal-box card card-side bg-base-100 shadow-xl w-11/12 max-w-5xl p-0">
+        <div className="modal-box card card-side  w-11/12 max-w-5xl p-0 bg-background shadow-custom">
           {selectedRequest && <ViewProfile matchRequest={selectedRequest} />}
           <div className="modal-action">
             <form method="dialog">

@@ -20,7 +20,7 @@ export async function ProfileMenu() {
           </div>
         </div>
       </summary>
-      <ul className="bg-base-100 p-6 absolute top-full right-0 z-10 w-72 drop-shadow-xl rounded">
+      <ul className="p-6 absolute top-full right-0 z-10 w-72 drop-shadow-xl rounded bg-background shadow-custom">
         <li>
           <figure className="flex flex-col avatar items-center pb-6">
             <div className="w-14 rounded-full ">

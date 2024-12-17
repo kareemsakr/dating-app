@@ -13,6 +13,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      boxShadow: {
+        custom: "var(--shadow-color) 0px 5px 15px",
+      },
     },
   },
   plugins: [require("daisyui")],
