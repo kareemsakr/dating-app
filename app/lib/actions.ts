@@ -109,6 +109,16 @@ export async function getProfile(userId: string) {
   }
 }
 
+export async function getUserProfile(userId: string) {
+  try {
+    const userProfile = await db.getUserProfile(userId);
+    return userProfile;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 export async function getUser(email: string) {
   try {
     const user = await db.getUser(email);
@@ -261,6 +271,26 @@ export async function matchUsers(
 
       return { status: "error", message: error.message };
     }
+    throw error;
+  }
+}
+
+export async function getMatchRequest(userId: string) {
+  try {
+    const matchRequest = await db.getMatchRequest(userId);
+    return matchRequest;
+  } catch (error) {
+    console.error("Failed to fetch match request:", error);
+    throw error;
+  }
+}
+
+export async function getActiveMatch(userId: string) {
+  try {
+    const match = await db.getActiveMatch(userId);
+    return match;
+  } catch (error) {
+    console.error("Failed to fetch active match:", error);
     throw error;
   }
 }

@@ -5,6 +5,7 @@ import type {
   MatchRequest,
   Match,
   matchResultSearchResult,
+  UserProfile,
 } from "@/app/lib/definitions";
 import bcrypt from "bcrypt";
 
@@ -26,6 +27,31 @@ export async function getProfile(userId: string): Promise<Profile | undefined> {
   } catch (error) {
     console.error("Failed to fetch profile:", error);
     throw new Error("Failed to fetch profile.");
+  }
+}
+
+export async function getUserProfile(
+  userId: string
+): Promise<UserProfile | undefined> {
+  try {
+    const userProfiles = await sql<UserProfile>`select 
+        u.id as user_id,
+        u.name,
+        u.gender,
+        u.birthdate,
+        p.interests,
+        p.avatar_url,
+        p.bio,
+        p.looking_for,
+        p.non_negotiables,
+        p.location    
+      from users u
+      inner join profile p on p.user_id = u.id
+      where u.id = ${userId}`;
+    return userProfiles.rows[0];
+  } catch (error) {
+    console.error("Failed to fetch user profile:", error);
+    throw new Error("Failed to fetch user profile.");
   }
 }
 
@@ -103,6 +129,34 @@ export async function createMatchRequest(userId: string, notes: string) {
   }
 }
 
+export async function getMatchRequest(userId: string) {
+  try {
+    const matchRequest = await sql<matchResultSearchResult>`SELECT 
+      u.id as user_id,
+      u.name,
+      u.gender,
+      u.birthdate,
+      p.interests,
+      p.avatar_url,
+      mr.id as match_request_id,
+      mr.notes,
+      mr.status,
+      mr.created_at,
+      p.bio,
+      p.looking_for,
+      p.non_negotiables,
+      p.location
+    FROM match_requests mr
+    inner join users u on u.id = mr.user_id
+    inner join profile p on p.user_id = mr.user_id
+    WHERE mr.user_id = ${userId} AND status = 'pending'`;
+    return matchRequest.rows[0];
+  } catch (error) {
+    console.error("Failed to fetch match request:", error);
+    throw new Error("Failed to fetch match request.");
+  }
+}
+
 export async function searchMatchRequests(
   status?: string,
   createdDateStart?: Date,
@@ -164,8 +218,8 @@ export async function createMatch(
   matchMakerId: string
 ) {
   try {
-    await sql<Match>`INSERT INTO matches (user1, user2, match_maker)
-              VALUES (${user1}, ${user2}, ${matchMakerId})`;
+    await sql<Match>`INSERT INTO matches (user1, user2, match_maker, expires_at)
+              VALUES (${user1}, ${user2}, ${matchMakerId}, CURRENT_DATE + INTERVAL '7 days')`;
   } catch (error) {
     console.error("Failed to create match:", error);
     if (error instanceof Error && "detail" in error) {
@@ -194,5 +248,16 @@ export async function closeMatchRequest(matchRequestId: string) {
     } else {
       throw new Error("Failed to close match request.");
     }
+  }
+}
+
+export async function getActiveMatch(userId: string) {
+  try {
+    const match =
+      await sql<Match>`SELECT * FROM matches WHERE user1 = ${userId} OR user2 = ${userId} and expires_at > CURRENT_DATE`;
+    return match.rows[0];
+  } catch (error) {
+    console.error("Failed to fetch active match:", error);
+    throw new Error("Failed to fetch active match.");
   }
 }

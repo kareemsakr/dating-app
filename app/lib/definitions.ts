@@ -18,6 +18,8 @@ export type Profile = {
   avatar_url: string;
 };
 
+export type UserProfile = Profile & User;
+
 export enum Gender {
   Male = "male",
   Female = "female",
@@ -32,11 +34,11 @@ export type MatchRequest = {
 };
 
 export type Match = {
-  user1_id: string;
-  user2_id: string;
+  user1: string;
+  user2: string;
   matchMakerId: string;
-  createdAt: Date;
-  expiresAt: Date;
+  created_at: Date;
+  expires_at: Date;
 };
 
 export type matchResultSearchResult = {

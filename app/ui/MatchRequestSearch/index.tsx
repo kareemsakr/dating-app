@@ -140,6 +140,15 @@ function ViewProfile({
         />
       </figure>
       <div className="card-body">
+        <figure className="w-full md:w-0 md:h-0 avatar">
+          <div className="mask mask-squircle h-24 w-24">
+            <img
+              className="h-full"
+              src={matchRequest.avatar_url}
+              alt="profile picture"
+            />
+          </div>
+        </figure>
         <h2 className="card-title md:text-3xl">
           {matchRequest.name}
           <span className="text-sm opacity-50 self-center">

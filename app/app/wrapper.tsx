@@ -2,7 +2,7 @@
 import React, { useState, cloneElement, ReactElement, ReactNode } from "react";
 import { matchResultSearchResult } from "../lib/definitions";
 
-export default function Wrapper({
+export default function SelectionWrapper({
   children,
 }: Readonly<{
   children: ReactNode;
