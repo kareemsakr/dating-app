@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@firebase/database": "^1.0.10",
     "@heroicons/react": "^2.2.0",
     "@vercel/blob": "^0.27.0",
     "@vercel/postgres": "^0.10.0",
     "bcrypt": "^5.1.1",
     "clsx": "^2.1.1",
+    "firebase": "^11.1.0",
     "next": "15.0.3",
     "next-auth": "5.0.0-beta.25",
     "react": "19.0.0-rc-66855b96-20241106",

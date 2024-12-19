@@ -58,3 +58,12 @@ export type matchResultSearchResult = {
   interests: string;
   non_negotiables: string;
 };
+
+export interface Message {
+  id?: string;
+  content: string;
+  fromId: string;
+  toId: string;
+  timestamp: number;
+  read: boolean;
+}
