@@ -13,6 +13,7 @@ import {
   UserProfile,
 } from "../lib/definitions";
 import { capitalize, daysUntil, getAge } from "../lib/utlis";
+import Link from "next/link";
 
 export function UserHomePage({
   request,
@@ -173,9 +174,9 @@ function ActiveMatch({
             </div>
           </dl>
           <div className="card-actions justify-end">
-            <button onClick={() => null} className="btn btn-primary text-white">
+            <Link href={"/app/chat"} className="btn btn-primary text-white">
               Chat
-            </button>
+            </Link>
           </div>
         </div>
       </section>
