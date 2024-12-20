@@ -9,7 +9,7 @@ export type User = {
 };
 
 export type Profile = {
-  userId: string;
+  user_id: string;
   bio: string;
   looking_for: string;
   interests: string;
@@ -34,6 +34,7 @@ export type MatchRequest = {
 };
 
 export type Match = {
+  id: string;
   user1: string;
   user2: string;
   matchMakerId: string;
@@ -65,5 +66,4 @@ export interface Message {
   fromId: string;
   toId: string;
   timestamp: number;
-  read: boolean;
 }

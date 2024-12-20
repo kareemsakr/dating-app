@@ -1,17 +1,21 @@
-"use client";
+import { getActiveMatch } from "@/app/lib/actions";
+import { getUserProfile } from "@/app/lib/db";
+import ChatScreen from "@/app/ui/ChatScreen";
+import { auth } from "@/auth";
 
-import { useChat } from "@/app/hooks/useChat";
-import { useEffect } from "react";
+export default async function Page() {
+  const { user } = (await auth()) || {};
 
-export default function Page() {
-  const { messages, sendMessage } = useChat("currentUserId", "recipientId");
+  const match = await getActiveMatch(user.sub);
+  const userProfile = await getUserProfile(user.sub);
+  const matchedUserId = user.sub === match.user1 ? match.user2 : match.user1;
+  const matchedUserProfile = await getUserProfile(matchedUserId);
 
-  useEffect(() => {
-    if (messages.length > 0) {
-      console.log("New messages:", messages);
-    }
-
-    sendMessage("Hello, world!");
-  }, []);
-  return <></>;
+  return (
+    <ChatScreen
+      userProfile={userProfile}
+      matchProfile={matchedUserProfile}
+      match={match}
+    />
+  );
 }

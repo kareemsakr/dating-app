@@ -174,7 +174,7 @@ function ActiveMatch({
             </div>
           </dl>
           <div className="card-actions justify-end">
-            <Link href={"/app/chat"} className="btn btn-primary text-white">
+            <Link href={`/app/chat`} className="btn btn-primary text-white">
               Chat
             </Link>
           </div>

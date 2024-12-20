@@ -8,7 +8,6 @@ import {
   query,
   orderByChild,
   limitToLast,
-  update,
 } from "firebase/database";
 
 export const chatService = {

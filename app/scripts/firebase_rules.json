@@ -1,0 +1,44 @@
+{
+    "rules": {
+      "chats": {
+        "$matchId": {        // Example: "550e8400-e29b-41d4-a716-446655440000"
+          ".read": "
+            // Only allow reading if user has valid auth token AND 
+            // the matchId in their token matches this chat's ID
+            auth !== null &&
+            auth.token.matchId === $matchId
+          ",
+          "messages": {
+            ".write": "
+              // Only allow writing if user has valid auth token AND 
+              // the matchId in their token matches this chat's ID
+              auth !== null &&
+              auth.token.matchId === $matchId
+            ",
+            "$messageId": {   // Example: "-Mxyz123" (Firebase auto-generated)
+              ".validate": "
+                // 1. Check required fields exist
+                newData.hasChildren(['content', 'fromId', 'toId', 'timestamp']) &&
+                
+                // 2. Validate message content
+                newData.child('content').isString() &&
+                newData.child('content').val().length > 0 &&
+                newData.child('content').val().length <= 1000 &&
+                
+                // 3. Verify sender is current user
+                newData.child('fromId').val() === auth.uid &&
+                
+                // 4. Verify recipient is match participant
+                newData.child('toId').val() === auth.token.otherUserId &&
+                
+                // 5. Ensure timestamp is recent (within 1 minute)
+                newData.child('timestamp').isNumber() &&
+                newData.child('timestamp').val() <= (now + 60000) &&
+                newData.child('timestamp').val() >= (now - 60000)
+              "
+            }
+          }
+        }
+      }
+    }
+  }

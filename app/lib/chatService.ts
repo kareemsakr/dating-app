@@ -1,17 +1,10 @@
-// lib/chat-service.ts
 import { Message } from "./definitions";
 import { db } from "./firebase";
 import { ref, onValue, push, serverTimestamp } from "firebase/database";
 
 export const chatService = {
-  getChatId: (userId1: string, userId2: string) => {
-    return [userId1, userId2].sort().join("_");
-  },
-
-  sendMessage: async (message: Omit<Message, "timestamp">) => {
-    const chatId = chatService.getChatId(message.fromId, message.toId);
+  sendMessage: async (chatId: string, message: Omit<Message, "timestamp">) => {
     const chatRef = ref(db, `chats/${chatId}/messages`);
-
     return push(chatRef, {
       ...message,
       timestamp: serverTimestamp(),

@@ -9,7 +9,7 @@ import type {
 } from "@/app/lib/definitions";
 import bcrypt from "bcrypt";
 
-export async function getUser(email: string): Promise<User | undefined> {
+export async function getUser(email: string): Promise<User> {
   try {
     const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
     return user.rows[0];
@@ -30,9 +30,7 @@ export async function getProfile(userId: string): Promise<Profile | undefined> {
   }
 }
 
-export async function getUserProfile(
-  userId: string
-): Promise<UserProfile | undefined> {
+export async function getUserProfile(userId: string): Promise<UserProfile> {
   try {
     const userProfiles = await sql<UserProfile>`select 
         u.id as user_id,

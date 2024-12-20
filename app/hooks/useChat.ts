@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { initializeDatabase } from "@/app/lib/firebase";
 import { chatService } from "@/app/lib/chatService";
-import { Message } from "@/app/lib/definitions";
+import { Match, Message } from "@/app/lib/definitions";
 
-export function useChat(currentUserId: string, recipientId: string) {
+export function useChat(
+  match: Match,
+  currentUserId: string,
+  recipientId: string
+) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,8 +28,7 @@ export function useChat(currentUserId: string, recipientId: string) {
         setIsInitialized(true);
 
         // Subscribe to chat messages
-        const chatId = chatService.getChatId(currentUserId, recipientId);
-        unsubscribe = chatService.subscribeToChat(chatId, (newMessages) => {
+        unsubscribe = chatService.subscribeToChat(match.id, (newMessages) => {
           setMessages(newMessages);
           setLoading(false);
         });
@@ -52,11 +55,12 @@ export function useChat(currentUserId: string, recipientId: string) {
   const sendMessage = async (content: string): Promise<boolean> => {
     if (!isInitialized) {
       setError("Chat not initialized");
+
       return false;
     }
 
     try {
-      await chatService.sendMessage({
+      await chatService.sendMessage(match.id, {
         content,
         fromId: currentUserId,
         toId: recipientId,

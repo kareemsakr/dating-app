@@ -160,7 +160,7 @@ export async function updateProfile(_: unknown, formData: FormData) {
     }
 
     const profile: Profile = {
-      userId: id as string,
+      user_id: id as string,
       bio: formData.get("bio") as string,
       looking_for: formData.get("looking_for") as string,
       interests: formData.get("interests") as string,
@@ -169,7 +169,7 @@ export async function updateProfile(_: unknown, formData: FormData) {
       avatar_url: blob?.url || (dbProfile?.avatar_url as string),
     };
 
-    const res = await db.updateProfile(profile.userId, profile);
+    const res = await db.updateProfile(profile.user_id, profile);
 
     if (res?.rowCount == 0) throw Error("Failed to update profile");
 
