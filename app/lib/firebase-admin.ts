@@ -3,7 +3,7 @@ import { getAuth } from "firebase-admin/auth";
 
 const firebaseAdminConfig = {
   credential: cert({
-    projectId: process.env.ADMIN_PROJECT_ID,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
     clientEmail: process.env.ADMIN_CLIENT_EMAIL,
     privateKey: process.env.ADMIN_PRIVATE_KEY?.replace(/\\n/g, "\n"),
   }),
