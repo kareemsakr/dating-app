@@ -25,7 +25,7 @@ export async function ProfileMenu() {
           <MenuItems avatar_url={profile?.avatar_url} name={user?.name} />
         </ul>
       </details>
-      <ul className="md:hidden">
+      <ul className="flex flex-col h-full md:hidden">
         <MenuItems avatar_url={profile?.avatar_url} name={user?.name} />
       </ul>
     </>
@@ -54,7 +54,7 @@ const MenuItems = ({
       <li className="pb-2">
         <Link href={HOME_URL}>Home</Link>
       </li>
-      <li>
+      <li className="flex-1">
         <Link href={PROFILE_URL}>Profile</Link>
       </li>
       <div className="divider"></div>

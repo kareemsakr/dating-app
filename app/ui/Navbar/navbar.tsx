@@ -40,7 +40,7 @@ const MenuItems = function ({
       </li> */}
       <li className={styles.spacer}></li>
       {isLoggedIn ? (
-        <li>
+        <li className="h-full">
           <ProfileMenu />
         </li>
       ) : (
