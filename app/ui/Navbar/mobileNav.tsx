@@ -31,7 +31,12 @@ export default function MobileNav({
         ☰
       </button>
       {(isOpen || isClosing) && (
-        <div className={clsx(styles.menu, { [styles.slide_out]: isClosing })}>
+        <div
+          className={clsx(styles.menu, {
+            [styles.slide_out]: isClosing,
+            [styles.menu_open]: isOpen,
+          })}
+        >
           <header className={styles.menu_navigation}>
             <BrandButton />
             <button

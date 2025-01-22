@@ -22,7 +22,7 @@
 
 .menu {
   font-size: var(--3xl);
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   top: 0;
@@ -33,7 +33,6 @@
   z-index: 100;
   background-color: var(--background);
   animation: slide-in 0.5s forwards;
-  overflow: hidden;
 
   & button {
     font-size: var(--m);
@@ -143,4 +142,8 @@
       }
     }
   }
+}
+
+body:has(.menu_open) {
+  overflow: hidden;
 }
