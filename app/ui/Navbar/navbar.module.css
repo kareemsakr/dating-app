@@ -33,6 +33,7 @@
   z-index: 100;
   background-color: var(--background);
   animation: slide-in 0.5s forwards;
+  overflow: hidden;
 
   & button {
     font-size: var(--m);
@@ -78,6 +79,7 @@
 }
 
 .desktop_menu {
+  display: none;
   @media screen {
     @media (min-width: 768px) {
       display: flex;
@@ -134,5 +136,11 @@
 
   & .spacer {
     flex-grow: 1;
+    display: none;
+    @media screen {
+      @media (min-width: 768px) {
+        display: block;
+      }
+    }
   }
 }
